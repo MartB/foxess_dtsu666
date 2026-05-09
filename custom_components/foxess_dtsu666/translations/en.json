@@ -1,0 +1,147 @@
+{
+  "config": {
+    "step": {
+      "connection_type": {
+        "title": "DTSU666 Sniffer — Connection type",
+        "data": {
+          "connection_type": "Connection type"
+        },
+        "data_description": {
+          "connection_type": "Choose how the RS485 bus is connected to this machine."
+        }
+      },
+      "serial": {
+        "title": "DTSU666 Sniffer — Serial port",
+        "data": {
+          "serial_port": "Serial port",
+          "baudrate": "Baud rate",
+          "parity": "Parity",
+          "update_interval": "Update interval (seconds)",
+          "staleness_threshold": "Unavailable after (seconds)",
+          "device_name": "Device name"
+        }
+      },
+      "discover": {
+        "title": "DTSU666 Sniffer — Scanning bus"
+      },
+      "select_slave": {
+        "title": "DTSU666 Sniffer — Active polling",
+        "description": "Found {count} device(s) on the bus: {slaves}.\n\nSelect a slave ID to enable active polling when the inverter is offline, or disable it and configure later via reconfigure.",
+        "data": {
+          "slave_id": "Slave ID",
+          "always_poll": "Always poll actively"
+        },
+        "data_description": {
+          "always_poll": "Only enable this if no inverter or other device is polling the meter. Two bus masters running simultaneously will cause communication errors."
+        }
+      },
+      "tcp": {
+        "title": "DTSU666 Sniffer — TCP bridge",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "staleness_threshold": "Unavailable after (seconds)",
+          "device_name": "Device name"
+        }
+      }
+    },
+    "progress": {
+      "discovering": "Scanning the RS485 bus for active Modbus slaves…"
+    },
+    "error": {
+      "invalid_serial_port": "Please enter or select a valid serial port path.",
+      "invalid_host": "Please enter a valid hostname or IP address.",
+      "cannot_connect": "Could not connect to the TCP host. Check that the host/port are correct and the serial bridge is running."
+    },
+    "abort": {
+      "already_configured": "This meter (same port and slave address) is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "DTSU666 Sniffer options",
+        "data": {
+          "update_interval": "Update interval (seconds)",
+          "staleness_threshold": "Unavailable after (seconds)"
+        }
+      }
+    }
+  },
+  "selector": {
+    "connection_type": {
+      "options": {
+        "serial": "Local serial port (USB-RS485 adapter)",
+        "tcp": "TCP network bridge (ser2net, esp-link, …)"
+      }
+    },
+    "parity": {
+      "options": {
+        "N": "None (8N1)",
+        "E": "Even (8E1)",
+        "O": "Odd (8O1)"
+      }
+    }
+  },
+  "issues": {
+    "no_traffic_silent": {
+      "title": "No data received on RS485 bus",
+      "description": "**{name}** has been connected for 30 seconds but no bytes have been received at all. Check the serial port selection, RS485 adapter wiring, and that the inverter is powered on. This notice will clear automatically once traffic is detected."
+    },
+    "no_traffic_crc": {
+      "title": "RS485 data received but all frames failing CRC",
+      "description": "**{name}** is receiving data but every frame fails its CRC check. This usually means the baud rate or parity setting does not match the meter. Check the baud rate and parity in the integration options. This notice will clear automatically once valid frames are decoded."
+    },
+    "no_traffic_unknown": {
+      "title": "Modbus frames decoded but no meter data found",
+      "description": "**{name}** is decoding valid Modbus frames but none match the expected DTSU666 register addresses. Check that the correct meter model is connected. This notice will clear automatically once meter data is seen."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "voltage_A": {"name": "Voltage L1"},
+      "voltage_B": {"name": "Voltage L2"},
+      "voltage_C": {"name": "Voltage L3"},
+      "current_A": {"name": "Current L1"},
+      "current_B": {"name": "Current L2"},
+      "current_C": {"name": "Current L3"},
+      "power_total_kW": {"name": "Active power total"},
+      "power_A_kW": {"name": "Active power L1"},
+      "power_B_kW": {"name": "Active power L2"},
+      "power_C_kW": {"name": "Active power L3"},
+      "reactive_total_kVAr": {"name": "Reactive power total"},
+      "reactive_A_kVAr": {"name": "Reactive power L1"},
+      "reactive_B_kVAr": {"name": "Reactive power L2"},
+      "reactive_C_kVAr": {"name": "Reactive power L3"},
+      "apparent_total_kVA": {"name": "Apparent power total"},
+      "apparent_A_kVA": {"name": "Apparent power L1"},
+      "apparent_B_kVA": {"name": "Apparent power L2"},
+      "apparent_C_kVA": {"name": "Apparent power L3"},
+      "pf_total": {"name": "Power factor total"},
+      "pf_A": {"name": "Power factor L1"},
+      "pf_B": {"name": "Power factor L2"},
+      "pf_C": {"name": "Power factor L3"},
+      "frequency_Hz": {"name": "Frequency"},
+      "energy_import_total_kWh": {"name": "Energy import total"},
+      "energy_export_total_kWh": {"name": "Energy export total"},
+      "energy_import_A_kWh": {"name": "Energy import L1"},
+      "energy_import_B_kWh": {"name": "Energy import L2"},
+      "energy_import_C_kWh": {"name": "Energy import L3"},
+      "energy_export_A_kWh": {"name": "Energy export L1"},
+      "energy_export_B_kWh": {"name": "Energy export L2"},
+      "energy_export_C_kWh": {"name": "Energy export L3"},
+      "energy_reactive_Q1_kVArh": {"name": "Reactive energy Q1"},
+      "energy_reactive_total_kVArh": {"name": "Reactive energy total"},
+      "cosphi_computed": {"name": "cos φ (computed)"},
+      "stat_crc_err": {"name": "CRC errors (5 min)"},
+      "stat_timeout": {"name": "Timeouts (5 min)"},
+      "stat_resync": {"name": "Resyncs (5 min)"},
+      "stat_last_error": {"name": "Last bus error"},
+      "stat_consecutive_errors": {"name": "Consecutive errors"},
+      "stat_poll_0x1510": {"name": "Poll interval 0x1510"},
+      "stat_poll_0x151e": {"name": "Poll interval 0x151E"},
+      "stat_poll_0x181e": {"name": "Poll interval 0x181E"},
+      "stat_discovered_addrs": {"name": "Discovered endpoints"}
+    }
+  }
+}

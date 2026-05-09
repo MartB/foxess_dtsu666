@@ -1,0 +1,26 @@
+DOMAIN = "foxess_dtsu666"
+
+CONF_CONNECTION_TYPE = "connection_type"
+CONF_SERIAL_PORT = "serial_port"
+CONF_BAUDRATE = "baudrate"
+CONF_PARITY = "parity"
+CONF_BYTESIZE = "bytesize"
+CONF_STOPBITS = "stopbits"
+CONF_HOST = "host"
+CONF_PORT = "port"
+CONF_STALENESS = "staleness_threshold"
+CONF_UPDATE_INTERVAL = "update_interval"
+CONF_DEVICE_NAME = "device_name"
+CONF_SLAVE_ID = "slave_id"
+CONF_ALWAYS_POLL = "always_poll"
+
+CONN_SERIAL = "serial"
+CONN_TCP = "tcp"
+
+DEFAULT_BAUDRATE = 9600
+DEFAULT_PARITY = "N"
+DEFAULT_BYTESIZE = 8
+DEFAULT_STOPBITS = 1
+DEFAULT_TCP_PORT = 23
+DEFAULT_STALENESS = 60
+DEFAULT_UPDATE_INTERVAL = 5

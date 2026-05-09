@@ -1,0 +1,147 @@
+{
+  "config": {
+    "step": {
+      "connection_type": {
+        "title": "DTSU666 Sniffer — Verbindungstyp",
+        "data": {
+          "connection_type": "Verbindungstyp"
+        },
+        "data_description": {
+          "connection_type": "Wählen Sie, wie der RS485-Bus mit diesem Gerät verbunden ist."
+        }
+      },
+      "serial": {
+        "title": "DTSU666 Sniffer — Serieller Port",
+        "data": {
+          "serial_port": "Serieller Port",
+          "baudrate": "Baudrate",
+          "parity": "Parität",
+          "update_interval": "Aktualisierungsintervall (Sekunden)",
+          "staleness_threshold": "Nicht verfügbar nach (Sekunden)",
+          "device_name": "Gerätename"
+        }
+      },
+      "discover": {
+        "title": "DTSU666 Sniffer — Bus wird gescannt"
+      },
+      "select_slave": {
+        "title": "DTSU666 Sniffer — Aktives Polling",
+        "description": "{count} Gerät(e) auf dem Bus gefunden: {slaves}.\n\nWählen Sie eine Slave-ID, um aktives Polling zu aktivieren, wenn der Wechselrichter offline ist, oder deaktivieren Sie es und konfigurieren Sie es später über \"Neu konfigurieren\".",
+        "data": {
+          "slave_id": "Slave-ID",
+          "always_poll": "Immer aktiv pollen"
+        },
+        "data_description": {
+          "always_poll": "Nur aktivieren, wenn kein Wechselrichter oder anderes Gerät den Zähler abfragt. Zwei Bus-Master gleichzeitig verursachen Kommunikationsfehler."
+        }
+      },
+      "tcp": {
+        "title": "DTSU666 Sniffer — TCP-Bridge",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "staleness_threshold": "Nicht verfügbar nach (Sekunden)",
+          "device_name": "Gerätename"
+        }
+      }
+    },
+    "progress": {
+      "discovering": "RS485-Bus wird nach aktiven Modbus-Slaves durchsucht…"
+    },
+    "error": {
+      "invalid_serial_port": "Bitte einen gültigen seriellen Port-Pfad eingeben oder auswählen.",
+      "invalid_host": "Bitte einen gültigen Hostnamen oder eine IP-Adresse eingeben.",
+      "cannot_connect": "Verbindung zum TCP-Host nicht möglich. Prüfen Sie Host/Port und ob die serielle Bridge läuft."
+    },
+    "abort": {
+      "already_configured": "Dieser Zähler (gleicher Port und Slave-Adresse) ist bereits konfiguriert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "DTSU666 Sniffer Optionen",
+        "data": {
+          "update_interval": "Aktualisierungsintervall (Sekunden)",
+          "staleness_threshold": "Nicht verfügbar nach (Sekunden)"
+        }
+      }
+    }
+  },
+  "selector": {
+    "connection_type": {
+      "options": {
+        "serial": "Lokaler serieller Port (USB-RS485-Adapter)",
+        "tcp": "TCP-Netzwerkbridge (ser2net, esp-link, …)"
+      }
+    },
+    "parity": {
+      "options": {
+        "N": "Keine (8N1)",
+        "E": "Gerade (8E1)",
+        "O": "Ungerade (8O1)"
+      }
+    }
+  },
+  "issues": {
+    "no_traffic_silent": {
+      "title": "Keine Daten auf RS485-Bus empfangen",
+      "description": "**{name}** ist seit 30 Sekunden verbunden, es wurden jedoch keinerlei Bytes empfangen. Prüfen Sie die Portauswahl, die RS485-Adapter-Verkabelung und ob der Wechselrichter eingeschaltet ist. Diese Meldung verschwindet automatisch, sobald Datenverkehr erkannt wird."
+    },
+    "no_traffic_crc": {
+      "title": "RS485-Daten empfangen, aber alle Frames schlagen CRC-Prüfung fehl",
+      "description": "**{name}** empfängt Daten, aber jeder Frame schlägt die CRC-Prüfung fehl. Dies deutet meist auf eine falsche Baudrate oder Parität hin. Prüfen Sie Baudrate und Parität in den Integrationsoptionen. Diese Meldung verschwindet automatisch, sobald gültige Frames dekodiert werden."
+    },
+    "no_traffic_unknown": {
+      "title": "Modbus-Frames dekodiert, aber keine Zählerdaten gefunden",
+      "description": "**{name}** dekodiert gültige Modbus-Frames, aber keine davon stimmt mit den erwarteten DTSU666-Registeradressen überein. Prüfen Sie, ob das richtige Zählermodell angeschlossen ist. Diese Meldung verschwindet automatisch, sobald Zählerdaten erkannt werden."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "voltage_A": {"name": "Spannung L1"},
+      "voltage_B": {"name": "Spannung L2"},
+      "voltage_C": {"name": "Spannung L3"},
+      "current_A": {"name": "Strom L1"},
+      "current_B": {"name": "Strom L2"},
+      "current_C": {"name": "Strom L3"},
+      "power_total_kW": {"name": "Wirkleistung gesamt"},
+      "power_A_kW": {"name": "Wirkleistung L1"},
+      "power_B_kW": {"name": "Wirkleistung L2"},
+      "power_C_kW": {"name": "Wirkleistung L3"},
+      "reactive_total_kVAr": {"name": "Blindleistung gesamt"},
+      "reactive_A_kVAr": {"name": "Blindleistung L1"},
+      "reactive_B_kVAr": {"name": "Blindleistung L2"},
+      "reactive_C_kVAr": {"name": "Blindleistung L3"},
+      "apparent_total_kVA": {"name": "Scheinleistung gesamt"},
+      "apparent_A_kVA": {"name": "Scheinleistung L1"},
+      "apparent_B_kVA": {"name": "Scheinleistung L2"},
+      "apparent_C_kVA": {"name": "Scheinleistung L3"},
+      "pf_total": {"name": "Leistungsfaktor gesamt"},
+      "pf_A": {"name": "Leistungsfaktor L1"},
+      "pf_B": {"name": "Leistungsfaktor L2"},
+      "pf_C": {"name": "Leistungsfaktor L3"},
+      "frequency_Hz": {"name": "Frequenz"},
+      "energy_import_total_kWh": {"name": "Wirkenergie Bezug gesamt"},
+      "energy_export_total_kWh": {"name": "Wirkenergie Einspeisung gesamt"},
+      "energy_import_A_kWh": {"name": "Wirkenergie Bezug L1"},
+      "energy_import_B_kWh": {"name": "Wirkenergie Bezug L2"},
+      "energy_import_C_kWh": {"name": "Wirkenergie Bezug L3"},
+      "energy_export_A_kWh": {"name": "Wirkenergie Einspeisung L1"},
+      "energy_export_B_kWh": {"name": "Wirkenergie Einspeisung L2"},
+      "energy_export_C_kWh": {"name": "Wirkenergie Einspeisung L3"},
+      "energy_reactive_Q1_kVArh": {"name": "Blindenergie Q1"},
+      "energy_reactive_total_kVArh": {"name": "Blindenergie gesamt"},
+      "cosphi_computed": {"name": "cos φ (berechnet)"},
+      "stat_crc_err": {"name": "CRC-Fehler (5 Min.)"},
+      "stat_timeout": {"name": "Timeouts (5 Min.)"},
+      "stat_resync": {"name": "Resyncs (5 Min.)"},
+      "stat_last_error": {"name": "Letzter Busfehler"},
+      "stat_consecutive_errors": {"name": "Aufeinanderfolgende Fehler"},
+      "stat_poll_0x1510": {"name": "Poll-Intervall 0x1510"},
+      "stat_poll_0x151e": {"name": "Poll-Intervall 0x151E"},
+      "stat_poll_0x181e": {"name": "Poll-Intervall 0x181E"},
+      "stat_discovered_addrs": {"name": "Erkannte Endpunkte"}
+    }
+  }
+}
