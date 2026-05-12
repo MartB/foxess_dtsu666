@@ -1,6 +1,3 @@
-# HA test harness — must match the target HA minor version
-pytest-homeassistant-custom-component>=0.13.330
-
 # Integration runtime dependency (mirrors manifest.json)
 pyserial-asyncio-fast==0.16
 pyserial>=3.5

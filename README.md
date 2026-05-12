@@ -96,6 +96,20 @@ Workaround: set the slave ID in the integration options. When the inverter event
 
 **Per-address supplemental polling** — if specific register groups have not been seen for a while but the bus is otherwise active, poll only those addresses rather than taking over the whole bus. This would handle the firmware 1.91 case automatically without any manual configuration. The groundwork (per-address poll-interval sensors, unknown-endpoint tracking) is already in place.
 
+## Releasing
+
+1. Update `version` in `custom_components/foxess_dtsu666/manifest.json` to the new version (e.g. `0.2.0`).
+2. Commit and push.
+3. Tag the commit and push the tag:
+   ```
+   git tag v0.2.0
+   git push origin v0.2.0
+   ```
+
+The release workflow validates that the manifest version matches the tag, runs the tests, builds `foxess_dtsu666.zip`, and publishes a GitHub release with auto-generated notes. HACS picks up the new release automatically.
+
+The workflow will fail and **not** publish if the manifest version and tag do not match.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

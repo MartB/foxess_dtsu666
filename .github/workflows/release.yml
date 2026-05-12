@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate manifest.json version matches tag
+        run: |
+          manifest=$(python3 -c "
+          import json, sys
+          v = json.load(open('custom_components/foxess_dtsu666/manifest.json'))['version']
+          print(v)
+          ")
+          tag="${{ steps.version.outputs.version }}"
+          if [ "$manifest" != "$tag" ]; then
+            echo "ERROR: manifest.json version ($manifest) does not match tag ($tag)"
+            echo "Update the version field in manifest.json before tagging."
+            exit 1
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Run tests
+        run: |
+          pip install -q -r requirements_dev.txt
+          python -m pytest tests/ -q
+
+      - name: Build zip
+        run: |
+          zip -r foxess_dtsu666.zip custom_components/foxess_dtsu666/
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: foxess_dtsu666.zip
+          generate_release_notes: true
+          fail_on_unmatched_files: true
