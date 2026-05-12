@@ -39,7 +39,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         sniffer_kwargs = dict(
             serial_port=data[CONF_SERIAL_PORT],
             baudrate=data.get(CONF_BAUDRATE, DEFAULT_BAUDRATE),
-            parity=data.get(CONF_PARITY, DEFAULT_PARITY),
+            parity=data.get(CONF_PARITY, DEFAULT_PARITY).upper(),
             bytesize=data.get(CONF_BYTESIZE, DEFAULT_BYTESIZE),
             stopbits=data.get(CONF_STOPBITS, DEFAULT_STOPBITS),
         )

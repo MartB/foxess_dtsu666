@@ -177,8 +177,8 @@ class Dtsu666ConfigFlow(ConfigFlow, domain=DOMAIN):
                     vol.Optional(CONF_BAUDRATE, default=int(d.get(CONF_BAUDRATE, DEFAULT_BAUDRATE))): NumberSelector(
                         NumberSelectorConfig(min=1200, max=115200, mode=NumberSelectorMode.BOX)
                     ),
-                    vol.Optional(CONF_PARITY, default=d.get(CONF_PARITY, DEFAULT_PARITY)): SelectSelector(
-                        SelectSelectorConfig(options=["N", "E", "O"], mode=SelectSelectorMode.DROPDOWN, translation_key="parity")
+                    vol.Optional(CONF_PARITY, default=d.get(CONF_PARITY, DEFAULT_PARITY).lower()): SelectSelector(
+                        SelectSelectorConfig(options=["n", "e", "o"], mode=SelectSelectorMode.DROPDOWN, translation_key="parity")
                     ),
                     **_timing_fields(
                         int(d.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)),
@@ -240,7 +240,7 @@ class Dtsu666ConfigFlow(ConfigFlow, domain=DOMAIN):
                 kwargs: dict = dict(
                     serial_port=d[CONF_SERIAL_PORT],
                     baudrate=int(d.get(CONF_BAUDRATE, DEFAULT_BAUDRATE)),
-                    parity=d.get(CONF_PARITY, DEFAULT_PARITY),
+                    parity=d.get(CONF_PARITY, DEFAULT_PARITY).upper(),
                     bytesize=int(d.get(CONF_BYTESIZE, DEFAULT_BYTESIZE)),
                     stopbits=int(d.get(CONF_STOPBITS, DEFAULT_STOPBITS)),
                 )

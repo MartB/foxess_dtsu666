@@ -1,12 +1,12 @@
 {
   "domain": "foxess_dtsu666",
   "name": "FoxESS DTSU666 Sniffer",
-  "version": "0.1.0",
-  "config_flow": true,
-  "iot_class": "local_push",
-  "integration_type": "device",
-  "documentation": "https://github.com/martb/foxess_dtsu666",
-  "issue_tracker": "https://github.com/martb/foxess_dtsu666/issues",
   "codeowners": ["@martb"],
-  "requirements": ["pyserial-asyncio-fast==0.16"]
+  "config_flow": true,
+  "documentation": "https://github.com/martb/foxess_dtsu666",
+  "integration_type": "device",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/martb/foxess_dtsu666/issues",
+  "requirements": ["pyserial-asyncio-fast==0.16"],
+  "version": "0.1.0"
 }

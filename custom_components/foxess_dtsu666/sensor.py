@@ -82,7 +82,7 @@ class Dtsu666MeasurementSensor(CoordinatorEntity[FoxessCoordinator], SensorEntit
         self._fd = fd
         self._slave_id = slave_id
         self._attr_unique_id = f"{entry.entry_id}_{slave_id}_{fd.key}"
-        self._attr_translation_key = fd.key
+        self._attr_translation_key = fd.key.lower()
         self._attr_device_class = fd.device_class
         self._attr_state_class = fd.state_class
         self._attr_native_unit_of_measurement = fd.unit
@@ -178,7 +178,7 @@ class Dtsu666DerivedSensor(CoordinatorEntity[FoxessCoordinator], SensorEntity):
         self._dfd = dfd
         self._slave_id = slave_id
         self._attr_unique_id = f"{entry.entry_id}_{slave_id}_{dfd.key}"
-        self._attr_translation_key = dfd.key
+        self._attr_translation_key = dfd.key.lower()
         self._attr_device_class = dfd.device_class
         self._attr_state_class = dfd.state_class
         self._attr_native_unit_of_measurement = dfd.unit
