@@ -151,9 +151,13 @@ def test_parse_0x181e_import_export():
     assert abs(result["energy_import_total_kWh"] - 1234.5) < 0.1
     assert abs(result["energy_export_total_kWh"] - 678.9) < 0.1
 
-def test_parse_0x181e_reactive_Q1_at_f4():
+def test_parse_0x181e_net_totals_at_f4_and_f9():
+    """0x1826 and 0x1830 are NetImpEp and NetExpEp, not reactive energy"""
     values = [0.0] * 10
-    values[4] = 42.0  # energy_reactive_Q1_kVArh
+    values[4] = 42.0
+    values[9] = 17.0
     payload = b"".join(_pack_float(v) for v in values)
     result = parse_0x181e(payload)
-    assert abs(result["energy_reactive_Q1_kVArh"] - 42.0) < 0.001
+    assert abs(result["energy_net_import_total_kWh"] - 42.0) < 0.001
+    assert abs(result["energy_net_export_total_kWh"] - 17.0) < 0.001
+    assert not any("reactive" in k for k in result)

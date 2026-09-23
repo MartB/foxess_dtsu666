@@ -79,7 +79,7 @@ The wizard asks for the connection type and serial/TCP parameters, briefly scans
 | Energy import total | 0x181E | yes |
 | Energy export total | 0x181E | yes |
 | Energy import / export L1 / L2 / L3 | 0x181E | no |
-| Reactive energy Q1 / total | 0x181E | no |
+| Net energy import / export (balanced across phases) | 0x181E | yes |
 | cos φ (computed from P and Q) | derived | yes |
 
 Diagnostic sensors (on the bus device, always available): CRC errors, timeouts, resyncs, consecutive errors, average response time, per-address poll intervals, last bus error, last seen age, and a list of any register addresses seen on the bus that this integration does not handle.

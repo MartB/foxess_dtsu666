@@ -70,18 +70,23 @@ def parse_0x151e(payload: bytes) -> dict:
 
 
 def parse_0x181e(payload: bytes) -> dict:
+    # Mirrors 0x101E-0x1030 of the Chint map. The Kehua manual leaves 0x1826 and 0x1830
+    # undocumented; they are the net (phase-balanced) totals, NetImpEp and NetExpEp. Their
+    # difference equals ImpEp - ExpEp, and they track a saldierend utility meter where the
+    # plain totals, which accumulate phase by phase, both run ~3 kWh/day higher. Quadrant I
+    # reactive energy sits at 0x1832, outside this block.
     f = _floats(payload, 0, 10)
     return {
         "energy_import_total_kWh": f[0],
         "energy_import_A_kWh": f[1],
         "energy_import_B_kWh": f[2],
         "energy_import_C_kWh": f[3],
-        "energy_reactive_Q1_kVArh": f[4],
+        "energy_net_import_total_kWh": f[4],
         "energy_export_total_kWh": f[5],
         "energy_export_A_kWh": f[6],
         "energy_export_B_kWh": f[7],
         "energy_export_C_kWh": f[8],
-        "energy_reactive_total_kVArh": f[9],
+        "energy_net_export_total_kWh": f[9],
     }
 
 
@@ -176,9 +181,9 @@ FIELD_DESCRIPTIONS: list[_FD] = [
     _FD("energy_export_total_kWh",    _DC.ENERGY,          _TI, _kWh,  0x181E),
     *_three_phase("energy_import", "_kWh", _DC.ENERGY,     _TI, _kWh,  0x181E, enabled_default=False),
     *_three_phase("energy_export", "_kWh", _DC.ENERGY,     _TI, _kWh,  0x181E, enabled_default=False),
-    # Reactive energy (no HA device class for kVArh)
-    _FD("energy_reactive_Q1_kVArh",   None,                _TI, "kVArh", 0x181E, enabled_default=False, precision=2),
-    _FD("energy_reactive_total_kVArh", None,               _TI, "kVArh", 0x181E, precision=2),
+    # Net energy, balanced across the phases — what a saldierend utility meter bills
+    _FD("energy_net_import_total_kWh", _DC.ENERGY,         _TI, _kWh,  0x181E),
+    _FD("energy_net_export_total_kWh", _DC.ENERGY,         _TI, _kWh,  0x181E),
 ]
 
 DERIVED_FIELD_DESCRIPTIONS: list[_DerivedFD] = [
